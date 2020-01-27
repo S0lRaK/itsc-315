@@ -1,0 +1,14 @@
+/*UseTestJar.jar can't read java.home property but TestJar.jar can! */
+
+/*
+grant codeBase "file:./UseTestJar.jar" { 
+	permission java.util.PropertyPermission "java.home", "read";
+};
+*/
+
+
+
+grant codeBase "file:./TestJar.jar" { 
+	permission java.util.PropertyPermission "java.home", "read";
+};
+

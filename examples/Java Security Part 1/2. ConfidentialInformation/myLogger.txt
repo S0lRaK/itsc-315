@@ -1,0 +1,6 @@
+Jan 17, 2016 8:12:18 PM SimpleLogger main
+SEVERE: Hello myLogger!
+Jan 17, 2016 8:12:19 PM SimpleLogger main
+SEVERE: Hello logging: Parameterized log message here
+Jan 17, 2016 8:12:19 PM SimpleLogger myMethod
+SEVERE: Logging from a method call...

@@ -1,0 +1,48 @@
+<html>
+
+<body>
+
+<h2>JavaScript Injection - Online Calculator</h2>
+
+Enter a mathematical expression, e.g. 1+1 or 1+2*3/4...
+<!-- Simple online calculator, enter expressions in the textbox and submit
+	e.g. 1+1, 6*9, 56%5 etc.
+	
+	Try entering the following as a calculation: alert('ok') 
+-->
+
+<form action='javascriptInjection.html' method='GET'>
+Enter calculation: <input type='text' name='myExpr'>
+<input type='submit' value='Submit'>
+</form>
+
+<div id='result'></div>
+
+<script type='text/javascript'>
+
+//Function to get a specific parameter from the submitted query string
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+
+//Get the parameter called myExpr
+var expr = getQueryVariable('myExpr');
+
+if (expr!=false)
+{
+	//eval() evaluates an expression or executes JavaScript code.
+	//unescape() decodes the encoded URL query string as it was submitted to the browser (Google for "URL encoding").
+	document.getElementById('result').innerHTML=eval(unescape(expr));
+}
+</script>
+
+</body>
+
+</html>

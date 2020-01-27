@@ -1,0 +1,1 @@
+Directory was renamed from "sealedpackage" because otherwise the command line "java" program finds the classes in the package, ignoring the .jar file directives on the command line. Change it back to "sealedpackage" to rebuild the .jar files.

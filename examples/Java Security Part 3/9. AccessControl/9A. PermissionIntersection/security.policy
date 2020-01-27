@@ -1,0 +1,12 @@
+/* Add "readdata/" to the end of the codeBase path below to only allow code in "readdata" subdirectory/package 
+//to read from input.txt */
+
+/* IMPORTANT: 	Edit the path in "codeBase" below to point at the location of the code on *your* computer.
+				Also edit the location of "input.txt" to the location it is held on *your* computer.
+*/
+
+
+grant codeBase "file:./-" {
+  permission java.io.FilePermission "../input.txt", "read";
+};
+

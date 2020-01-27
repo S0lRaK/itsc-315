@@ -1,0 +1,19 @@
+A full HTML login form (need to change "action" IP address):
+----------------------------------------------------------
+
+<html>
+<body>
+<form action="http://192.168.46.140" method="GET" target="http://192.168.46.140">
+Username: <input type="text" name="username" id='username' size="10">
+Password: <input type="password" name="password" id='password' size="10">
+<input type="submit" value="Login">
+</form>
+</body>
+</html>
+
+
+
+Just a hyperlink:
+-----------------
+
+<a href='http://www.sait.ca'>Go</a>
