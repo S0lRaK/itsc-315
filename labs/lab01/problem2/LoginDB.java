@@ -3,7 +3,7 @@ import java.util.*;
 
 public class LoginDB
 {
-	public static void main(String args[]) throws ClassNotFoundException
+	public static void main(String args[]) throws ClassNotFoundException, Exception
 	{
 		String database=null;
 		String username=null;
@@ -13,32 +13,43 @@ public class LoginDB
 		ArrayList<User> users = new ArrayList<User>();
 		Scanner s = new Scanner(System.in);
 
-		if (args.length>0)
+		try
 		{
-			database=args[0];
+			if (args.length == 5)
+			{
+				database=args[0];
 
-			loginUser=args[1];
+				loginUser=args[1];
 
-			loginPass=args[2];
-			
-			username=args[3];
+				loginPass=args[2];
+				
+				username=args[3];
 
-			password=args[4];
+				password=args[4];
+			}
+			else if (args.length == 0)
+			{
+				System.out.println("Enter database:");
+				database=s.nextLine();
+
+				System.out.println("Enter db login:");
+				loginUser=s.nextLine();
+				System.out.println("Enter db pass:");
+				loginPass=s.nextLine();
+
+				System.out.println("Enter username:");
+				username=s.nextLine();
+				System.out.println("Enter password:");
+				password=s.nextLine();
+			}
+			else
+			{
+				throw new Exception();
+			}
 		}
-		else
+		catch (Exception e)
 		{
-			System.out.println("Enter database:");
-			database=s.nextLine();
-
-			System.out.println("Enter db login:");
-			loginUser=s.nextLine();
-			System.out.println("Enter db pass:");
-			loginPass=s.nextLine();
-
-			System.out.println("Enter username:");
-			username=s.nextLine();
-			System.out.println("Enter password:");
-			password=s.nextLine();
+			System.out.println("Incorrect amount of arguments entered.");
 		}
 
 		User loggingIn = new User(username,password);
@@ -70,7 +81,7 @@ public class LoginDB
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			System.out.println("Authentication problem (username and/or password) or incorrect database entered.");
 		}
 
 		boolean found=false;
