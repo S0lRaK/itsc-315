@@ -1,0 +1,3 @@
+To rebuild the ReadFile.jar file 
+javac -cp MyPackage MyPackage/TestClass.java
+jar cf ReadFile.jar MyPackage/*.class

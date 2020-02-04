@@ -1,0 +1,8 @@
+//grant codeBase "file:./*" {
+//	permission java.io.FilePermission "../input.txt", "read,write";
+//};
+
+grant codeBase "file:../other/*" {
+	permission java.io.FilePermission "../input.txt", "read";
+};
+

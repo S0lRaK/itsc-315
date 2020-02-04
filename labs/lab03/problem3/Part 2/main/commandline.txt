@@ -1,0 +1,4 @@
+Run in the "main" directory:
+
+javac -cp .:../other/ReadFile.jar *.java
+java -cp .:../other/ReadFile.jar -Djava.security.manager -Djava.security.policy=sec.pol TestMe
