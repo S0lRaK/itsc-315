@@ -13,6 +13,7 @@
         <h2>Bob's ATM</h2>
         <form action="banking" method="get">
             Amount to withdraw: <input type="text" name="amount"><br/>
+            <input type="hidden" name="nonceForm" value="${nonceForm}">
             <input type="submit" value="Withdraw">
         </form>
         
