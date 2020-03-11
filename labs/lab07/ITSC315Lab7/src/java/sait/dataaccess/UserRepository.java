@@ -1,6 +1,7 @@
 package sait.dataaccess;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -11,18 +12,18 @@ public class UserRepository {
    
     public int insert(User user) throws Exception  {
         Connection conn = DBUtil.getConnection();
-        String query = "INSERT INTO user values (" +
-                "'" + user.getUserName() + "'," +
-                "'" + user.getFirstName()+ "'," +
-                "'" + user.getLastName() + "'," +
-                "'" + user.getEmail()+ "'," +
-                "'" + user.getPassword()+ "');";
+        String query = "INSERT INTO user values (?,?,?,?,?);";
         
-        Statement stmt;
+        PreparedStatement stmt;
         int rows = 0;
         try {
-            stmt = conn.createStatement();
-            rows = stmt.executeUpdate(query);
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, user.getUserName());
+            stmt.setString(2, user.getFirstName());
+            stmt.setString(3, user.getLastName());
+            stmt.setString(4, user.getEmail());
+            stmt.setString(5, user.getPassword());
+            rows = stmt.executeUpdate();
         } finally {
             conn.close();
         }
@@ -33,17 +34,22 @@ public class UserRepository {
     public int update(User user) throws Exception {
         Connection conn = DBUtil.getConnection();
         String query = "UPDATE user " +
-                "SET firstname='" + user.getFirstName()+ "'," +
-                "lastname='" + user.getLastName() + "'," +
-                "email='" + user.getEmail()+ "'," +
-                "password='" + user.getPassword()+ "' " +
-                "WHERE username='" + user.getUserName() + "';";
+                "SET firstname=?," +
+                "lastname=?," +
+                "email=?," +
+                "password=? " +
+                "WHERE username=?;";
         
-        Statement stmt;
+        PreparedStatement stmt;
         int rows = 0;
         try {
-            stmt = conn.createStatement();
-            rows = stmt.executeUpdate(query);
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, user.getFirstName());
+            stmt.setString(2, user.getLastName());
+            stmt.setString(3, user.getEmail());
+            stmt.setString(4, user.getPassword());
+            stmt.setString(5, user.getUserName());
+            rows = stmt.executeUpdate();
         } finally {
             conn.close();
         }
@@ -82,13 +88,14 @@ public class UserRepository {
         User user = null;
         
         Connection conn = DBUtil.getConnection();
-        String query = "SELECT * FROM user WHERE username='" + username + "';";
+        String query = "SELECT * FROM user WHERE username=?;";
         
-        Statement stmt;
+        PreparedStatement stmt;
         int rows = 0;
         try {
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 user = new User(
                         rs.getString("username"),
@@ -108,13 +115,14 @@ public class UserRepository {
 
     public int delete(User user) throws Exception  {
         Connection conn = DBUtil.getConnection();
-        String query = "DELETE FROM user WHERE username='" + user.getUserName() + "';";
+        String query = "DELETE FROM user WHERE username=?;";
         
-        Statement stmt;
+        PreparedStatement stmt;
         int rows = 0;
         try {
-            stmt = conn.createStatement();
-            rows = stmt.executeUpdate(query);
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, user.getUserName());
+            rows = stmt.executeUpdate();
         } finally {
             conn.close();
         }
