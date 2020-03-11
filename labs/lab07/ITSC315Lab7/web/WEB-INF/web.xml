@@ -23,6 +23,16 @@
         <env-entry-type>java.lang.String</env-entry-type>
         <env-entry-value>password!$</env-entry-value>
     </env-entry>
+    <env-entry>
+        <env-entry-name>db-username</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>itsc315</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>db-password</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>password</env-entry-value>
+    </env-entry>
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>sait.filters.AuthenticationFilter</filter-class>
