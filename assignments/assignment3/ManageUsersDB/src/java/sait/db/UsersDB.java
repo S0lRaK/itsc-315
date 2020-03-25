@@ -25,7 +25,7 @@ public class UsersDB {
         Class.forName("com.mysql.jdbc.Driver");
 
         //Open special database connection...
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users?allowMultiQueries=true", "root", "password");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
 
         String sql = "insert into users set username=?, password=?;";
         PreparedStatement preparedStatement;
@@ -44,7 +44,7 @@ public class UsersDB {
         Class.forName("com.mysql.jdbc.Driver");
 
         //Open special database connection...
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users?allowMultiQueries=true", "root", "password");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
 
         String sql = "delete from users where username=?;";
         PreparedStatement preparedStatement;
