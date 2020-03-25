@@ -7,6 +7,7 @@ package sait.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,12 +27,17 @@ public class UsersDB {
         //Open special database connection...
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users?allowMultiQueries=true", "root", "password");
 
-        Statement st = conn.createStatement();
-        String sql = "insert into users set username='" + username + "', password='" + password + "';";
-        st.executeUpdate(sql);
-
-        st.close();
-        conn.close();
+        String sql = "insert into users set username=?, password=?;";
+        PreparedStatement preparedStatement;
+        
+        try {
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            preparedStatement.executeUpdate();
+        } finally {
+            conn.close();
+        }
     }
 
     public static void deleteUser(String username) throws ClassNotFoundException, SQLException {
