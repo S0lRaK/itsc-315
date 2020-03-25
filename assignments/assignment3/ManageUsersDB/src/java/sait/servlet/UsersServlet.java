@@ -24,6 +24,8 @@ public class UsersServlet extends HttpServlet {
             return;
         }
         
+        String currentUser = session.getAttribute("username").toString();
+        
         String message=request.getParameter("message");
         String username=request.getParameter("username");
         String password=request.getParameter("password");
@@ -43,7 +45,6 @@ public class UsersServlet extends HttpServlet {
         //Handle deleting user
         else if (delete != null)
         {
-            String currentUser = session.getAttribute("username").toString();
             if (UsersDB.isAdmin(currentUser)) {
                 try {
                 UsersDB.deleteUser(username);
@@ -58,6 +59,11 @@ public class UsersServlet extends HttpServlet {
         List<User> users;
         try {
             users = UsersDB.getUsers();
+            if (!UsersDB.isAdmin(currentUser)) {
+                for (User user : users) {
+                    user.setPassword("****");
+                }
+            }
             request.setAttribute("users", users);
         } catch (Exception ex) {
             Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
