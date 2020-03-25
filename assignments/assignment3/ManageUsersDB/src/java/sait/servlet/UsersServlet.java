@@ -43,11 +43,14 @@ public class UsersServlet extends HttpServlet {
         //Handle deleting user
         else if (delete != null)
         {
-            try {
+            String currentUser = session.getAttribute("username").toString();
+            if (UsersDB.isAdmin(currentUser)) {
+                try {
                 UsersDB.deleteUser(username);
                 request.setAttribute("message", "User deleted from database");
-            } catch (Exception ex) {
-                request.setAttribute("message", "error");
+                } catch (Exception ex) {
+                    request.setAttribute("message", "error");
+                }
             }
             
         }
