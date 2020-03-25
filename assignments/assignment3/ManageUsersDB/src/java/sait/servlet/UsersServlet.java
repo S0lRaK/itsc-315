@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class UsersServlet extends HttpServlet {
         String delete=request.getParameter("delete");
         
         //Handle adding a user
-        if (username!=null && password!=null && !username.equals("") && !password.equals(""))
+        if (username!=null && password!=null && !username.equals("") && !password.equals("") && Pattern.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$", password))
         {
             try {
                 UsersDB.addUser(username, password);
