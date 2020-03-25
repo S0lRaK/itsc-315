@@ -46,12 +46,16 @@ public class UsersDB {
         //Open special database connection...
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users?allowMultiQueries=true", "root", "password");
 
-        Statement st = conn.createStatement();
-        String sql = "delete from users where username='" + username + "'";
-        st.executeUpdate(sql);
-
-        st.close();
-        conn.close();
+        String sql = "delete from users where username=?;";
+        PreparedStatement preparedStatement;
+        
+        try {
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            preparedStatement.executeUpdate();
+        } finally {
+            conn.close();
+        }
     }
 
     public static List<User> getUsers() throws ClassNotFoundException, SQLException {
@@ -82,18 +86,19 @@ public class UsersDB {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
 
-            String sql = "select admin from users where username='" + username + "';";
+            String sql = "select admin from users where username=?;";
 
-            Statement st = conn.createStatement();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, username);
 
-            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
                 isAdmin = rs.getBoolean(1);
             }
 
             rs.close();
-            st.close();
+            preparedStatement.close();
             conn.close();
         } catch (Exception ex) {
         }
