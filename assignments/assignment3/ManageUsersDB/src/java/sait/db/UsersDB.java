@@ -101,17 +101,19 @@ public class UsersDB {
     }
 
     public static boolean validate(String username, String password) {
+        boolean valid = false;
+        
         try {
-            boolean valid = false;
-
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
 
-            String sql = "select * from users where username='" + username + "' and password='" + password + "';";
+            String sql = "select * from users where username=? and password=?;";
 
-            Statement st = conn.createStatement();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
 
-            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs = preparedStatement.executeQuery();
 
             int count = 0;
 
@@ -120,7 +122,7 @@ public class UsersDB {
             }
 
             rs.close();
-            st.close();
+            preparedStatement.close();
             conn.close();
 
             if (count > 0) {
