@@ -13,6 +13,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import sait.domain.User;
 
 /**
@@ -21,11 +24,13 @@ import sait.domain.User;
  */
 public class UsersDB {
 
-    public static void addUser(String username, String password) throws ClassNotFoundException, SQLException {
+    public static void addUser(String username, String password) throws ClassNotFoundException, SQLException, NamingException {
         Class.forName("com.mysql.jdbc.Driver");
 
-        //Open special database connection...
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
+        Context env = (Context)new InitialContext().lookup("java:comp/env");
+        String dbUsername = (String)env.lookup("db-username");
+        String dbPassword = (String)env.lookup("db-password");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", dbUsername, dbPassword);
 
         String sql = "insert into users set username=?, password=?;";
         PreparedStatement preparedStatement;
@@ -40,11 +45,13 @@ public class UsersDB {
         }
     }
 
-    public static void deleteUser(String username) throws ClassNotFoundException, SQLException {
+    public static void deleteUser(String username) throws ClassNotFoundException, SQLException, NamingException {
         Class.forName("com.mysql.jdbc.Driver");
 
-        //Open special database connection...
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
+        Context env = (Context)new InitialContext().lookup("java:comp/env");
+        String dbUsername = (String)env.lookup("db-username");
+        String dbPassword = (String)env.lookup("db-password");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", dbUsername, dbPassword);
 
         String sql = "delete from users where username=?;";
         PreparedStatement preparedStatement;
@@ -58,9 +65,12 @@ public class UsersDB {
         }
     }
 
-    public static List<User> getUsers() throws ClassNotFoundException, SQLException {
+    public static List<User> getUsers() throws ClassNotFoundException, SQLException, NamingException {
         Class.forName("com.mysql.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
+        Context env = (Context)new InitialContext().lookup("java:comp/env");
+        String dbUsername = (String)env.lookup("db-username");
+        String dbPassword = (String)env.lookup("db-password");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", dbUsername, dbPassword);
 
         String sql = "select * from users;";
         Statement st = conn.createStatement();
@@ -84,7 +94,10 @@ public class UsersDB {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
+            Context env = (Context)new InitialContext().lookup("java:comp/env");
+            String dbUsername = (String)env.lookup("db-username");
+            String dbPassword = (String)env.lookup("db-password");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", dbUsername, dbPassword);
 
             String sql = "select admin from users where username=?;";
 
@@ -110,7 +123,10 @@ public class UsersDB {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
+            Context env = (Context)new InitialContext().lookup("java:comp/env");
+            String dbUsername = (String)env.lookup("db-username");
+            String dbPassword = (String)env.lookup("db-password");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", dbUsername, dbPassword);
 
             String sql = "select * from users where username=? and password=?;";
 
